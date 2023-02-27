@@ -1,9 +1,10 @@
-# A template user project for use with Chaste.
+# Chaste-Actors
 
-You now simply click the big green "Use this template" button to use a copy of this repository as the basis of your own new repository under your github username/organisation (this 'template' status avoids complications with forks all being linked back to this repo).
+## Building The Project
 
-Alternatively, if you aren't a github user, you can download a zip (see Releases button) and start your own repository with that.
-
-Then see the [User Projects](https://chaste.cs.ox.ac.uk/trac/wiki/ChasteGuides/UserProjects) guide page on the Chaste wiki for more information.
-
-If you clone this repository, you should make sure to rename the template_project folder with your project name and run the 'setup_project.py' script to avoid conflicts if you have multiple projects.
+- Download the chaste source code
+- Within the chase source code is a `projects` directory. Clone this repo there.
+- CD into the cloned repo's location
+- Run `python3 setup_project.py` and answer y to all the onscreen prompts
+- Modify the runChasteS1S2_Bidomain.sh script or ensure its directories point to the correct location.
+- Run the script
