@@ -93,10 +93,7 @@ def main():
     test_cmakelists = os.path.join(path_to_project, 'test', 'CMakeLists.txt')
 
     # Files to append project name to - this avoids conflicts if mutliple projects are generated from the template project
-    files_requiring_append = [os.path.join(path_to_project, 'apps', 'src', 'ExampleApp.cpp'),
-                              os.path.join(path_to_project, 'src', 'Hello.cpp'),
-                              os.path.join(path_to_project, 'src', 'Hello.hpp'),
-                              os.path.join(path_to_project, 'test', 'TestHello.hpp')]
+    files_requiring_append = []
 
     # Append project name to required files
     append_project_name = partial(append_to_file_name, '_' + project_name)

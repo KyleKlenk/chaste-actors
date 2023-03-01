@@ -43,7 +43,7 @@ fileResults=Results_runChasteS1S2_Bidomain.txt
 numDigits=20
 
 #Number of time steps (we are outputting the solution every 0.1 ms)
-numTimeSteps=1
+numTimeSteps=8
 
 #These values are all set in the auto-generated C++ file
                         
