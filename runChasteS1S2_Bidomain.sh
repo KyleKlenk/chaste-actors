@@ -468,19 +468,19 @@ do
 			#endif /*TESTCHASTES1S2BIDOMAIN_HPP_*/
 
 
-			" > $CHASTE_LOCATION/$FILE_LOCATION/$fileNameCplusplus
+			" > $fileNameCplusplus
 
 			##################################
 
 
 		#Build and execute the C++ file
 			# Add file to ContinuousTestPack.txt if it's not already there
-			grep -q '$fileNameCplusplus' $CHASTE_LOCATION/$FILE_LOCATION/ContinuousTestPack.txt || echo "$fileNameCplusplus" >> $CHASTE_LOCATION/$FILE_LOCATION/ContinuousTestPack.txt
+		# 	grep -q '$fileNameCplusplus' $CHASTE_LOCATION/$FILE_LOCATION/ContinuousTestPack.txt || echo "$fileNameCplusplus" >> $CHASTE_LOCATION/$FILE_LOCATION/ContinuousTestPack.txt
 
-			cd $CHASTE_BUILD
-			cmake -DChaste_NUM_CPUS_TEST=$numOfCore $CHASTE_LOCATION
-		make $fileName
-			ctest -V -R $fileName$  #>> $CHASTE_TEST_OUTPUT/$fileResults
+		# 	cd $CHASTE_BUILD
+		# 	cmake -DChaste_NUM_CPUS_TEST=$numOfCore $CHASTE_LOCATION
+		# make $fileName
+		# 	ctest -V -R $fileName$  #>> $CHASTE_TEST_OUTPUT/$fileResults
     
 	done
 	done
