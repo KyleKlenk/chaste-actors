@@ -93,10 +93,10 @@ def main():
     test_cmakelists = os.path.join(path_to_project, 'test', 'CMakeLists.txt')
 
     # Files to append project name to - this avoids conflicts if mutliple projects are generated from the template project
-    files_requiring_append = []
+    files_requiring_append = [os.path.join(path_to_project, 'test', 'TestChasteS1S2Bidomain_Semi_Implicit.hpp')]
 
     # Append project name to required files
-    append_project_name = partial(append_to_file_name, '_' + project_name)
+    append_project_name = partial(append_to_file_name, '')
     appended_file_names = list(map(append_project_name, files_requiring_append))
 
     # Perform the find-and-replace tasks to update the template project source

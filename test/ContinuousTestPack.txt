@@ -1,1 +1,1 @@
-TestChasteS1S2Bidomain_Semi_Implicit
+TestChasteS1S2Bidomain_Semi_Implicit.hpp

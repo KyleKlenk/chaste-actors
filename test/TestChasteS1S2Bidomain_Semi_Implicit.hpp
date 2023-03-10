@@ -58,8 +58,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include <cxxtest/TestSuite.h>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
 #include <vector>
 #include <cmath>
 #include "CellMLToSharedLibraryConverter.hpp"
@@ -75,6 +73,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ZeroStimulusCellFactory.hpp"
 #include "TetrahedralMesh.hpp"
 #include "PetscTools.hpp"
+
+#include "some_function.hpp"
 
 
 //template<unsigned DIM>
@@ -128,7 +128,10 @@ class TestChasteS1S2Bidomain : public CxxTest::TestSuite {
 
     /* Methods wieth CxxTest need to start with Test so cmake can find them*/
     void TestSimpleSimulation() {
-      std::cout<< "Here1  " << std::endl;
+      // Call the actor's system
+      
+      create_actor_system();
+
 
       /* Define the mesh, unit of length:  cm */
       double xLength=0.4;
@@ -137,7 +140,6 @@ class TestChasteS1S2Bidomain : public CxxTest::TestSuite {
 
 
       /* Define dx and dt, and other simulation parameters */
-      std::cout<< "Here2  " << std::endl;
       double numSpacialPoints = 161-1;
       double h=xLength/numSpacialPoints;
       double dtCell = 0.001;
@@ -145,7 +147,6 @@ class TestChasteS1S2Bidomain : public CxxTest::TestSuite {
       double timeDuration=7.0;
 
       // Number of output time steps, and size of output time step. Note that dtOut/dtTissue and dtOut/dtCell must be integers
-      std::cout<< "Here3  " << std::endl;
       std::cout<< "h = " << h << std::endl;
       double numPrintTimeSteps=8-1;
       double dtOut = timeDuration/numPrintTimeSteps;
@@ -157,11 +158,10 @@ class TestChasteS1S2Bidomain : public CxxTest::TestSuite {
       * using {{{HeartConfig}}}. Let us begin by setting the end time (in ms), the mesh to use, and the
       * output directory and filename-prefix. 
       */
-      std::cout<< "Here4  " << std::endl;
       HeartConfig::Instance()->SetSimulationDuration(timeDuration); //ms
       TetrahedralMesh<3,3> mesh;
       mesh.ConstructRegularSlabMesh(h,xLength,yLength,zLength);
-      HeartConfig::Instance()->SetOutputDirectory("Bidomain_3D_Feb15_-214500_161");
+      HeartConfig::Instance()->SetOutputDirectory("test_output");
       HeartConfig::Instance()->SetOutputFilenamePrefix("results");
       HeartConfig::Instance()->SetVisualizerOutputPrecision(20);
 
@@ -180,7 +180,6 @@ class TestChasteS1S2Bidomain : public CxxTest::TestSuite {
       * of the correct size (3, in this case). Make sure these methods are called before
       * {{{Initialise()}}}.
       */
-      std::cout<< "Here5  " << std::endl;
       HeartConfig::Instance()->SetIntracellularConductivities(Create_c_vector(2.525, 0.222, 0.222));   // ms/cm
       HeartConfig::Instance()->SetExtracellularConductivities(Create_c_vector(8.21, 2.15, 2.15));   // ms/cm
 
@@ -196,12 +195,9 @@ class TestChasteS1S2Bidomain : public CxxTest::TestSuite {
       */
       HeartConfig::Instance()->SetOdePdeAndPrintingTimeSteps(dtCell, dtTissue, dtOut);
 
-      std::cout<< "Here6  " << std::endl;
 
       // Use Godunov OS method
-      //HeartConfig::Instance()->SetUseReactionDiffusionOperatorSplittingBidomainSolver();
       HeartConfig::Instance()->SetUseReactionDiffusionOperatorSplitting();
-      //HeartConfig::Instance()->SetUseGodunovReactionDiffusionOperatorSplittingBidomainSolver();
 
 
       /* Next, we have to create a cell factory of the type we defined above. */
@@ -210,7 +206,6 @@ class TestChasteS1S2Bidomain : public CxxTest::TestSuite {
       /* Now we create a problem class using (a pointer to) the cell factory. */
       BidomainProblem<3> bidomain_problem( &cell_factory );
 
-      std::cout<< "Here7  " << std::endl;
 
 
       /* Now we call Solve() to run the simulation. The output will be written to
@@ -221,22 +216,11 @@ class TestChasteS1S2Bidomain : public CxxTest::TestSuite {
       * {{{progress_status.txt}}}, which will say the percentage of the
       * simulation run. */
 
-      std::cout<< "Here8  " << std::endl;				
-
       bidomain_problem.SetMesh(&mesh);
-
-      std::cout<< "Here9  " << std::endl;
-
 
       bidomain_problem.Initialise();
 
-
-      std::cout<< "Here10  " << std::endl;
-
       bidomain_problem.Solve();
-
-
-      std::cout<< "Here 11 " << std::endl;
 
     }
 };
